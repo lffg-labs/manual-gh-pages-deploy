@@ -1,0 +1,25 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
+    environment:
+      name: GitHub Pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Create archive
+        run: tar -cvz -f github-pages ./build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+      - name: Deploy to GitHub pages
+        id: deployment
+        uses: actions/deploy-pages@v2
