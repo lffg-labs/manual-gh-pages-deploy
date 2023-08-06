@@ -16,10 +16,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Create archive
-        run: tar -cvz -f github-pages ./build
+      # - name: Create archive
+      #   run: tar -cvz -f github-pages ./build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
+        with:
+          path: build
       - name: Deploy to GitHub pages
         id: deployment
         uses: actions/deploy-pages@v2
